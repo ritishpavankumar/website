@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #09090b;
+      --surface: #18181b;
+      --surface-hover: #27272a;
+      --border: #27272a;
+      --border-subtle: #3f3f46;
+      --text-primary: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --accent-blue: #60a5fa;
+      --accent-green: #4ade80;
+      --accent-purple: #c084fc;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.6);
+    }
+
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --surface-hover: #f4f4f5;
+      --border: #e4e4e7;
+      --border-subtle: #d4d4d8;
+      --text-primary: #18181b;
+      --text-secondary: #52525b;
+      --text-muted: #a1a1aa;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 300ms ease, color 300ms ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes blobDrift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -20px) scale(1.05); }
+      50% { transform: translate(-20px, 30px) scale(0.95); }
+      75% { transform: translate(-30px, -10px) scale(1.02); }
+    }
+
+    @keyframes blobDrift2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(-25px, 25px) scale(1.03); }
+      50% { transform: translate(20px, -25px) scale(0.97); }
+      75% { transform: translate(30px, 15px) scale(1.04); }
+    }
+
+    @keyframes blobDrift3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(20px, 20px) scale(1.06); }
+      66% { transform: translate(-30px, -15px) scale(0.94); }
+    }
+
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(88, 28, 135, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 50% at 80% 60%, rgba(30, 58, 138, 0.35) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 50% 90%, rgba(79, 70, 229, 0.25) 0%, transparent 50%),
+        linear-gradient(180deg, #0a0a12 0%, #0f0f1a 50%, #0a0a14 100%);
+      z-index: 0;
+    }
+
+    [data-theme="light"] .bg-gradient {
+      background: 
+        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 50% at 80% 60%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 50% 90%, rgba(165, 180, 252, 0.1) 0%, transparent 50%),
+        linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%);
+    }
+
+    .bg-blobs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.5;
+      mix-blend-mode: screen;
+    }
+
+    .blob-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
+      top: -200px;
+      left: -200px;
+      animation: blobDrift 25s ease-in-out infinite;
+    }
+
+    .blob-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, transparent 70%);
+      top: 40%;
+      right: -150px;
+      animation: blobDrift2 30s ease-in-out infinite;
+      animation-delay: -10s;
+    }
+
+    .blob-3 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+      bottom: -100px;
+      left: 25%;
+      animation: blobDrift3 35s ease-in-out infinite;
+      animation-delay: -15s;
+    }
+
+    .blob-4 {
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
+      top: 60%;
+      left: 10%;
+      animation: blobDrift2 28s ease-in-out infinite;
+      animation-delay: -5s;
+    }
+
+    [data-theme="light"] .blob {
+      opacity: 0.25;
+      filter: blur(120px);
+      mix-blend-mode: multiply;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 32px 20px;
+      }
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 48px;
+      animation: fadeInUp 600ms ease-out;
+    }
+
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .header-text h1 {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .header-text p {
+      font-size: 15px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .search-box {
+      position: relative;
+      animation: slideIn 400ms ease-out;
+    }
+
+    .search-box input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 16px 10px 42px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-primary);
+      width: 260px;
+      transition: all 200ms ease;
+      outline: none;
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .theme-toggle, .export-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all 200ms ease;
+    }
+
+    .theme-toggle:hover, .export-btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-subtle);
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle:active, .export-btn:active {
+      transform: translateY(0);
+    }
+
+    .theme-toggle svg, .export-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .sun-icon { display: none; }
+    [data-theme="light"] .sun-icon { display: block; }
+    [data-theme="light"] .moon-icon { display: none; }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+      .search-box input {
+        width: 100%;
+      }
+      .header-top {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+      .header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      min-height: 420px;
+      box-shadow: var(--shadow-sm);
+      transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeInUp 600ms ease-out backwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 100ms; }
+    .card:nth-child(2) { animation-delay: 200ms; }
+    .card:nth-child(3) { animation-delay: 300ms; }
+
+    .card:hover {
+      border-color: var(--border-subtle);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: box-shadow 200ms ease;
+    }
+
+    .card--ideas .card-dot { 
+      background: var(--accent-blue); 
+      box-shadow: 0 0 12px var(--accent-blue);
+    }
+    .card--tasks .card-dot { 
+      background: var(--accent-green); 
+      box-shadow: 0 0 12px var(--accent-green);
+    }
+    .card--notes .card-dot { 
+      background: var(--accent-purple); 
+      box-shadow: 0 0 12px var(--accent-purple);
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    .bullet-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      opacity: 0.6;
+      font-family: monospace;
+    }
+
+    .card-content {
+      flex: 1;
+      position: relative;
+    }
+
+    .card-editor {
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      background: transparent;
+      border: none;
+      outline: none;
+      resize: none;
+      font-family: 'Inter', monospace;
+      font-size: 14.5px;
+      line-height: 1.9;
+      color: var(--text-primary);
+      caret-color: var(--accent-blue);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      transition: color 300ms ease;
+    }
+
+    .card-editor:empty::before {
+      content: attr(data-placeholder);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .card-editor::selection {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    .card--tasks .card-editor {
+      caret-color: var(--accent-green);
+    }
+
+    .card--tasks .card-editor::selection {
+      background: var(--accent-green);
+    }
+
+    .card--notes .card-editor {
+      caret-color: var(--accent-purple);
+    }
+
+    .card--notes .card-editor::selection {
+      background: var(--accent-purple);
+    }
+
+    .card:focus-within {
+      border-color: var(--accent-blue);
+      box-shadow: var(--shadow-lg), 0 0 0 4px rgba(96, 165, 250, 0.08);
+    }
+
+    .card--tasks:focus-within {
+      border-color: var(--accent-green);
+      box-shadow: var(--shadow-lg), 0 0 0 4px rgba(74, 222, 128, 0.08);
+    }
+
+    .card--notes:focus-within {
+      border-color: var(--accent-purple);
+      box-shadow: var(--shadow-lg), 0 0 0 4px rgba(192, 132, 252, 0.08);
+    }
+
+    .card.highlight {
+      animation: highlightPulse 800ms ease;
+    }
+
+    @keyframes highlightPulse {
+      0% { box-shadow: var(--shadow-lg), 0 0 0 4px rgba(96, 165, 250, 0.3); }
+      100% { box-shadow: var(--shadow-lg), 0 0 0 4px rgba(96, 165, 250, 0); }
+    }
+
+    .card--tasks.highlight {
+      animation: highlightPulseGreen 800ms ease;
+    }
+
+    @keyframes highlightPulseGreen {
+      0% { box-shadow: var(--shadow-lg), 0 0 0 4px rgba(74, 222, 128, 0.3); }
+      100% { box-shadow: var(--shadow-lg), 0 0 0 4px rgba(74, 222, 128, 0); }
+    }
+
+    .card--notes.highlight {
+      animation: highlightPulsePurple 800ms ease;
+    }
+
+    @keyframes highlightPulsePurple {
+      0% { box-shadow: var(--shadow-lg), 0 0 0 4px rgba(192, 132, 252, 0.3); }
+      100% { box-shadow: var(--shadow-lg), 0 0 0 4px rgba(192, 132, 252, 0); }
+    }
+
+    ::selection {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-subtle);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 14px;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast svg {
+      width: 18px;
+      height: 18px;
+      color: var(--accent-green);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <div class="header-left">
+        <div class="header-top">
+          <div class="header-text">
+            <h1>Dashboard</h1>
+            <p>Your personal workspace</p>
+          </div>
+          <div class="header-actions">
+            <div class="search-box">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+              <input type="text" id="searchInput" placeholder="Search all sections...">
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+              <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+              </svg>
+              <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+              </svg>
+              <span>Theme</span>
+            </button>
+            <button class="export-btn" id="exportBtn" aria-label="Export all notes">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+              <span>Export</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section class="card card--ideas">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-dot"></span>
+            <h2 class="card-title">Ideas</h2>
+          </div>
+          <span class="bullet-hint">→</span>
+        </div>
+        <div class="card-content">
+          <div class="card-editor" id="ideas" contenteditable="true" data-placeholder="Capture your ideas here..." data-bullet="→ "></div>
+        </div>
+      </section>
+
+      <section class="card card--tasks">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-dot"></span>
+            <h2 class="card-title">Tasks</h2>
+          </div>
+          <span class="bullet-hint">•</span>
+        </div>
+        <div class="card-content">
+          <div class="card-editor" id="tasks" contenteditable="true" data-placeholder="Track your tasks here..." data-bullet="• "></div>
+        </div>
+      </section>
+
+      <section class="card card--notes">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-dot"></span>
+            <h2 class="card-title">Notes</h2>
+          </div>
+          <span class="bullet-hint">—</span>
+        </div>
+        <div class="card-content">
+          <div class="card-editor" id="notes" contenteditable="true" data-placeholder="Jot down notes here..." data-bullet="— "></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+    </svg>
+    <span id="toastMessage">Exported successfully!</span>
+  </div>
+
+  <script>
+    const STORAGE_KEYS = {
+      ideas: 'dashboard_ideas',
+      tasks: 'dashboard_tasks',
+      notes: 'dashboard_notes',
+      theme: 'dashboard_theme'
+    };
+
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const exportBtn = document.getElementById('exportBtn');
+    const searchInput = document.getElementById('searchInput');
+    const editors = document.querySelectorAll('.card-editor');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    let debounceTimer;
+
+    function showToast(message) {
+      toastMessage.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    function initTheme() {
+      const saved = localStorage.getItem(STORAGE_KEYS.theme);
+      if (saved) {
+        html.setAttribute('data-theme', saved);
+      } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        html.setAttribute('data-theme', 'light');
+      }
+    }
+
+    function toggleTheme() {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem(STORAGE_KEYS.theme, next);
+    }
+
+    themeToggle.addEventListener('click', toggleTheme);
+
+    function loadContent() {
+      editors.forEach(editor => {
+        const key = STORAGE_KEYS[editor.id];
+        if (key) {
+          const saved = localStorage.getItem(key);
+          if (saved) {
+            editor.textContent = saved;
+          }
+        }
+      });
+    }
+
+    function saveContent(editor) {
+      const key = STORAGE_KEYS[editor.id];
+      if (key) {
+        localStorage.setItem(key, editor.textContent);
+      }
+    }
+
+    function debouncedSave(editor) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        saveContent(editor);
+      }, 500);
+    }
+
+    function highlightCard(card) {
+      card.classList.remove('highlight');
+      void card.offsetWidth;
+      card.classList.add('highlight');
+    }
+
+    function insertBullet(editor) {
+      const bullet = editor.getAttribute('data-bullet') || '• ';
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return;
+
+      const range = selection.getRangeAt(0);
+      const textNode = editor.firstChild;
+      
+      if (!textNode || editor.textContent.length === 0) {
+        editor.textContent = bullet;
+        const newRange = document.createRange();
+        newRange.setStart(editor.firstChild, bullet.length);
+        newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+      }
+    }
+
+    editors.forEach(editor => {
+      editor.addEventListener('input', () => {
+        debouncedSave(editor);
+      });
+
+      editor.addEventListener('blur', () => {
+        clearTimeout(debounceTimer);
+        saveContent(editor);
+      });
+
+      editor.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const bullet = editor.getAttribute('data-bullet') || '• ';
+          document.execCommand('insertText', false, '\n' + bullet);
+        }
+      });
+    });
+
+    function exportAllNotes() {
+      const ideas = localStorage.getItem(STORAGE_KEYS.ideas) || '';
+      const tasks = localStorage.getItem(STORAGE_KEYS.tasks) || '';
+      const notes = localStorage.getItem(STORAGE_KEYS.notes) || '';
+      
+      const date = new Date().toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+
+      const content = `=== DASHBOARD EXPORT ===\nDate: ${date}\n=======================\n\n## IDEAS\n${ideas || '(empty)'}\n\n## TASKS\n${tasks || '(empty)'}\n\n## NOTES\n${notes || '(empty)'}\n`;
+
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `dashboard-export-${new Date().toISOString().split('T')[0]}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast('Exported successfully!');
+    }
+
+    exportBtn.addEventListener('click', exportAllNotes);
+
+    function searchSections(query) {
+      if (!query.trim()) {
+        editors.forEach(editor => {
+          editor.style.color = '';
+        });
+        return;
+      }
+
+      const lowerQuery = query.toLowerCase();
+      
+      editors.forEach(editor => {
+        const card = editor.closest('.card');
+        const text = editor.textContent.toLowerCase();
+        
+        if (text.includes(lowerQuery)) {
+          card.style.opacity = '1';
+          highlightCard(card);
+        } else {
+          card.style.opacity = '0.5';
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      searchSections(e.target.value);
+    });
+
+    searchInput.addEventListener('blur', () => {
+      if (!searchInput.value) {
+        editors.forEach(editor => {
+          editor.style.color = '';
+          editor.closest('.card').style.opacity = '1';
+        });
+      }
+    });
+
+    initTheme();
+    loadContent();
+  </script>
+</body>
+</html>
