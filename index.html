@@ -427,6 +427,22 @@
 
     .header-actions { display: flex; gap: 12px; align-items: center; }
 
+    .streak-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(234, 88, 12, 0.15));
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #f97316;
+    }
+
+    .streak-badge svg { width: 16px; height: 16px; }
+    .streak-badge span { font-weight: 700; }
+
     .search-box { position: relative; }
 
     .search-box input {
@@ -445,6 +461,181 @@
     .search-box input::placeholder { color: var(--text-muted); }
     .search-box input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
     .search-box svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text-muted); }
+
+    .quick-add-bar {
+      margin-bottom: 24px;
+      animation: fadeInUp 400ms ease-out;
+    }
+
+    .quick-add-input-wrap {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .quick-add-input-wrap input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--text-primary);
+      outline: none;
+      transition: all 200ms ease;
+    }
+
+    .quick-add-input-wrap input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    .quick-add-input-wrap input::placeholder { color: var(--text-muted); }
+
+    .quick-add-toggle {
+      display: flex;
+      gap: 4px;
+      background: var(--surface);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .quick-toggle-btn {
+      padding: 8px 14px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 200ms ease;
+      font-family: inherit;
+    }
+
+    .quick-toggle-btn:hover { color: var(--text-primary); }
+    .quick-toggle-btn.active { background: var(--accent-blue); color: white; }
+
+    .today-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      animation: fadeInUp 500ms ease-out;
+    }
+
+    .today-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .today-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .today-title svg { width: 20px; height: 20px; color: var(--accent-orange); }
+
+    .today-progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .today-progress span {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-green);
+    }
+
+    .progress-bar {
+      width: 100px;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-green), #4ade80);
+      border-radius: 3px;
+      transition: width 400ms ease;
+      width: 0%;
+    }
+
+    .today-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .today-empty {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .today-task-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(30, 30, 38, 0.5);
+      border-radius: 10px;
+      transition: all 200ms ease;
+    }
+
+    [data-theme="light"] .today-task-item { background: rgba(255, 255, 255, 0.7); }
+
+    .today-task-item:hover { background: var(--surface-hover); }
+
+    .today-task-item.important {
+      border-left: 3px solid var(--accent-orange);
+    }
+
+    .today-task-item.completed { opacity: 0.5; }
+    .today-task-item.completed .today-task-title { text-decoration: line-through; }
+
+    .today-task-checkbox {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 200ms ease;
+      flex-shrink: 0;
+    }
+
+    .today-task-checkbox:hover { border-color: var(--accent-green); }
+    .today-task-checkbox.checked { background: var(--accent-green); border-color: var(--accent-green); }
+    .today-task-checkbox.checked svg { opacity: 1; }
+    .today-task-checkbox svg { width: 12px; height: 12px; color: white; opacity: 0; }
+
+    .today-task-title {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .today-task-important {
+      color: var(--accent-orange);
+      font-size: 12px;
+    }
 
     .icon-btn {
       display: flex;
@@ -1022,16 +1213,16 @@
             </div>
           </div>
           <div class="header-text">
-            <h1>Productivity Hub</h1>
-            <p>Organize your tasks, ideas, and notes</p>
+            <h1 id="greeting">Good Morning</h1>
+            <p id="dateDisplay"></p>
           </div>
         </div>
         <div class="header-actions">
-          <div class="search-box">
+          <div class="streak-badge" id="streakBadge">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.5a2.25 2.25 0 0 1 3.5 1.5c0 1.5-.5 2.5-1 3.5m10.662-3.338a7.465 7.465 0 0 0-11.663-3.05 7.465 7.465 0 0 0-2.39 7.118A7.465 7.465 0 0 0 12 21a7.465 7.465 0 0 0 5.662-2.388" />
             </svg>
-            <input type="text" id="globalSearch" placeholder="Search...">
+            <span id="streakCount">0</span> day streak
           </div>
           <button class="icon-btn" id="themeToggle" title="Toggle Theme">
             <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -1044,12 +1235,44 @@
         </div>
       </header>
 
+      <div class="quick-add-bar">
+        <div class="quick-add-input-wrap">
+          <input type="text" id="quickAddInput" placeholder="Quick add... (press Enter)">
+          <div class="quick-add-toggle">
+            <button class="quick-toggle-btn active" data-type="task" onclick="setQuickAddType('task')">Task</button>
+            <button class="quick-toggle-btn" data-type="idea" onclick="setQuickAddType('idea')">Idea</button>
+            <button class="quick-toggle-btn" data-type="note" onclick="setQuickAddType('note')">Note</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="today-section" id="todaySection">
+        <div class="today-header">
+          <h2 class="today-title">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            Today Focus
+          </h2>
+          <div class="today-progress">
+            <span id="todayProgress">0/0</span>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+        </div>
+        <div class="today-tasks" id="todayTasks"></div>
+        <div class="today-empty" id="todayEmpty" style="display:none;">
+          <p>No tasks for today. Add one above!</p>
+        </div>
+      </div>
+
       <div class="tabs">
-        <button class="tab-btn active" data-tab="tasks">
+        <button class="tab-btn active" data-tab="all">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
           </svg>
-          Tasks
+          All
         </button>
         <button class="tab-btn" data-tab="ideas">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -1067,7 +1290,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
           </svg>
-          Completed
+          Done
         </button>
       </div>
 
@@ -1189,31 +1412,39 @@
       workspaces: [],
       activeWorkspace: null,
       theme: 'dark',
-      currentTab: 'tasks'
+      currentTab: 'all',
+      quickAddType: 'task',
+      streak: 0,
+      lastActiveDate: null
     };
 
     var STORAGE_KEYS = {
       workspaces: 'dashboard_workspaces',
       activeWorkspace: 'dashboard_activeWorkspace',
-      theme: 'dashboard_theme'
-    };
-
-    var SUGGESTIONS = {
-      tasks: ['Schedule weekly team meeting', 'Review project milestones', 'Follow up on pending emails', 'Prepare monthly report', 'Update task priorities'],
-      ideas: ['Brainstorm new features', 'Document process improvements', 'Research competitor strategies', 'Explore automation opportunities', 'Collect user feedback ideas'],
-      notes: ['Meeting key takeaways', 'Code review notes', 'Learning highlights', 'Project planning thoughts', 'Daily standup summary']
+      theme: 'dashboard_theme',
+      streak: 'dashboard_streak',
+      lastActiveDate: 'dashboard_lastActive'
     };
 
     function init() {
       loadState();
+      checkStreak();
       initTheme();
+      updateGreeting();
+      updateStreakDisplay();
       renderWorkspaces();
+      renderTodaySection();
       renderContent();
       setupEventListeners();
     }
 
     function loadState() {
       try {
+        var savedStreak = localStorage.getItem(STORAGE_KEYS.streak);
+        var savedLastDate = localStorage.getItem(STORAGE_KEYS.lastActiveDate);
+        if (savedStreak) state.streak = parseInt(savedStreak) || 0;
+        if (savedLastDate) state.lastActiveDate = savedLastDate;
+
         var saved = localStorage.getItem(STORAGE_KEYS.workspaces);
         if (saved) {
           state.workspaces = JSON.parse(saved);
@@ -1258,6 +1489,176 @@
         state.activeWorkspace = state.workspaces[0].id;
         state.theme = 'dark';
       }
+    }
+
+    function checkStreak() {
+      var today = new Date().toDateString();
+      var yesterday = new Date(Date.now() - 86400000).toDateString();
+      
+      if (state.lastActiveDate === today) {
+        return;
+      } else if (state.lastActiveDate === yesterday) {
+        state.streak++;
+      } else {
+        state.streak = 1;
+      }
+      
+      state.lastActiveDate = today;
+      localStorage.setItem(STORAGE_KEYS.streak, state.streak);
+      localStorage.setItem(STORAGE_KEYS.lastActiveDate, today);
+    }
+
+    function updateStreakDisplay() {
+      var streakEl = document.getElementById('streakCount');
+      if (streakEl) {
+        streakEl.textContent = state.streak;
+      }
+    }
+
+    function updateGreeting() {
+      var hour = new Date().getHours();
+      var greeting = 'Good Morning';
+      if (hour >= 12 && hour < 17) greeting = 'Good Afternoon';
+      else if (hour >= 17) greeting = 'Good Evening';
+      
+      var greetingEl = document.getElementById('greeting');
+      if (greetingEl) greetingEl.textContent = greeting;
+      
+      var dateEl = document.getElementById('dateDisplay');
+      if (dateEl) {
+        var options = { weekday: 'long', month: 'long', day: 'numeric' };
+        dateEl.textContent = new Date().toLocaleDateString('en-US', options);
+      }
+    }
+
+    function isToday(dateStr) {
+      if (!dateStr) return false;
+      return new Date(dateStr).toDateString() === new Date().toDateString();
+    }
+
+    function getTodayTasks() {
+      var ws = getActiveWorkspace();
+      if (!ws) return [];
+      return ws.tasks.filter(function(t) { return isToday(t.createdAt) && !t.completed; });
+    }
+
+    function getTodayCompleted() {
+      var ws = getActiveWorkspace();
+      if (!ws) return [];
+      return ws.tasks.filter(function(t) { return isToday(t.createdAt) && t.completed; });
+    }
+
+    function renderTodaySection() {
+      var todayTasks = getTodayTasks();
+      var completed = getTodayCompleted();
+      var container = document.getElementById('todayTasks');
+      var emptyEl = document.getElementById('todayEmpty');
+      var progressEl = document.getElementById('todayProgress');
+      var progressFill = document.getElementById('progressFill');
+      
+      var total = todayTasks.length + completed.length;
+      var done = completed.length;
+      
+      if (progressEl) progressEl.textContent = done + '/' + total;
+      if (progressFill) progressFill.style.width = total > 0 ? (done / total * 100) + '%' : '0%';
+      
+      if (container) {
+        if (todayTasks.length === 0 && completed.length === 0) {
+          container.innerHTML = '';
+          if (emptyEl) emptyEl.style.display = 'block';
+        } else {
+          if (emptyEl) emptyEl.style.display = 'none';
+          var allTasks = todayTasks.concat(completed);
+          container.innerHTML = allTasks.map(function(t) {
+            var completedClass = t.completed ? ' completed' : '';
+            var importantClass = t.important ? ' important' : '';
+            var checkedClass = t.completed ? ' checked' : '';
+            return '<div class="today-task-item' + completedClass + importantClass + '">' +
+              '<div class="today-task-checkbox' + checkedClass + '" onclick="toggleTodayTask(\'' + t.id + '\')">' +
+              '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>' +
+              '</div>' +
+              '<span class="today-task-title">' + escapeHtml(t.title) + '</span>' +
+              (t.important ? '<span class="today-task-important">!</span>' : '') +
+              '</div>';
+          }).join('');
+        }
+      }
+    }
+
+    function toggleTodayTask(id) {
+      var ws = getActiveWorkspace();
+      if (!ws) return;
+      for (var i = 0; i < ws.tasks.length; i++) {
+        if (ws.tasks[i].id === id) {
+          ws.tasks[i].completed = !ws.tasks[i].completed;
+          break;
+        }
+      }
+      saveState();
+      renderTodaySection();
+    }
+
+    function setQuickAddType(type) {
+      state.quickAddType = type;
+      var buttons = document.querySelectorAll('.quick-toggle-btn');
+      for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i].getAttribute('data-type') === type) {
+          buttons[i].classList.add('active');
+        } else {
+          buttons[i].classList.remove('active');
+        }
+      }
+    }
+
+    function quickAdd() {
+      var input = document.getElementById('quickAddInput');
+      if (!input) return;
+      var text = input.value.trim();
+      if (!text) return;
+      
+      var ws = getActiveWorkspace();
+      if (!ws) return;
+      
+      var item = {
+        id: generateId(),
+        title: text,
+        content: text,
+        tags: [],
+        createdAt: new Date().toISOString(),
+        completed: false,
+        important: text.startsWith('!')
+      };
+      
+      if (item.important) {
+        item.title = text.substring(1).trim();
+        item.content = item.title;
+      }
+      
+      if (state.quickAddType === 'task') {
+        ws.tasks.unshift(item);
+        showToast('Task added!');
+      } else if (state.quickAddType === 'idea') {
+        ws.ideas.unshift(item);
+        showToast('Idea added!');
+      } else if (state.quickAddType === 'note') {
+        ws.notes.unshift(item);
+        showToast('Note added!');
+      }
+      
+      input.value = '';
+      saveState();
+      renderTodaySection();
+      renderContent();
+    }
+
+    function resetDay() {
+      if (!confirm('Move all today\'s completed tasks to history?')) return;
+      var ws = getActiveWorkspace();
+      if (!ws) return;
+      ws.tasks = ws.tasks.filter(function(t) { return !isToday(t.createdAt) || !t.completed; });
+      saveState();
+      renderTodaySection();
+      showToast('Day reset!');
     }
 
     function saveState() {
@@ -1342,6 +1743,7 @@
       state.activeWorkspace = id;
       saveState();
       renderWorkspaces();
+      renderTodaySection();
       renderContent();
     }
 
@@ -1352,14 +1754,54 @@
       var searchInput = document.getElementById('globalSearch');
       var searchQuery = searchInput ? searchInput.value.toLowerCase() : '';
 
-      if (state.currentTab === 'tasks') {
-        renderTasks(ws, searchQuery);
+      if (state.currentTab === 'all') {
+        renderAll(ws, searchQuery);
       } else if (state.currentTab === 'ideas') {
         renderIdeas(ws, searchQuery);
       } else if (state.currentTab === 'notes') {
         renderNotes(ws, searchQuery);
       } else if (state.currentTab === 'completed') {
         renderCompleted(ws, searchQuery);
+      }
+    }
+
+    function renderAll(ws, searchQuery) {
+      var tasks = ws.tasks.filter(function(t) {
+        if (!searchQuery) return true;
+        return t.title.toLowerCase().includes(searchQuery);
+      }).filter(function(t) { return !isToday(t.createdAt) || !t.completed; });
+
+      var ideas = ws.ideas.filter(function(i) {
+        if (!searchQuery) return true;
+        return i.title.toLowerCase().includes(searchQuery) || i.content.toLowerCase().includes(searchQuery);
+      });
+
+      var content = document.getElementById('contentArea');
+      
+      if (tasks.length === 0 && ideas.length === 0) {
+        content.innerHTML = '<div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg><h3>All caught up!</h3><p>Use the quick add above or browse your ideas and notes</p></div>';
+      } else {
+        var html = '';
+        
+        if (tasks.length > 0) {
+          html += '<div class="section-header"><h2 class="section-title">Backlog Tasks</h2></div>';
+          html += '<div class="task-list">';
+          for (var i = 0; i < tasks.length; i++) {
+            html += renderTaskItem(tasks[i]);
+          }
+          html += '</div>';
+        }
+        
+        if (ideas.length > 0) {
+          html += '<div class="section-header" style="margin-top: 24px;"><h2 class="section-title">Ideas</h2></div>';
+          html += '<div class="ideas-grid">';
+          for (var j = 0; j < ideas.length; j++) {
+            html += renderIdeaCard(ideas[j]);
+          }
+          html += '</div>';
+        }
+        
+        content.innerHTML = html;
       }
     }
 
@@ -1708,7 +2150,11 @@
       
       var resetBtn = document.getElementById('resetBtn');
       if (resetBtn) {
-        resetBtn.addEventListener('click', resetData);
+        resetBtn.addEventListener('click', function() {
+          if (confirm('Reset all data? This cannot be undone.')) {
+            resetData();
+          }
+        });
       }
       
       var addWsBtn = document.getElementById('addWorkspaceBtn');
@@ -1716,9 +2162,13 @@
         addWsBtn.addEventListener('click', function() { openModal('workspaceModal'); });
       }
       
-      var searchInput = document.getElementById('globalSearch');
-      if (searchInput) {
-        searchInput.addEventListener('input', renderContent);
+      var quickAddInput = document.getElementById('quickAddInput');
+      if (quickAddInput) {
+        quickAddInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            quickAdd();
+          }
+        });
       }
 
       var tabBtns = document.querySelectorAll('.tab-btn');
